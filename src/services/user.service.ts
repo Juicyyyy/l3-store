@@ -3,9 +3,12 @@ import { genUUID } from '../utils/helpers';
 
 const ID_DB = '__wb-userId';
 
-class UserService {
+export class UserService {
+  static userId: string;
+
   async init() {
     const id = await this.getId();
+    UserService.userId = id;
     console.warn('UserID: ', id);
   }
 

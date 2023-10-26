@@ -1,7 +1,7 @@
 import { addElement } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
-
+import { UserService } from '../../services/user.service';
 import { ProductList } from '../productList/productList';
 
 class Homepage extends Component {
@@ -15,7 +15,11 @@ class Homepage extends Component {
   }
 
   render() {
-    fetch('/api/getPopularProducts')
+    fetch('/api/getPopularProducts', {
+        headers: {
+          'x-userid': UserService.userId
+        }
+  })
       .then((res) => res.json())
       .then((products) => {
         this.popularProducts.update(products);
