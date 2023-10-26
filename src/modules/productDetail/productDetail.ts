@@ -5,10 +5,10 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 
-class ProductDetail extends Component {
+export class ProductDetail extends Component {
   more: ProductList;
   product?: ProductData;
-
+  
   constructor(props: any) {
     super(props);
 
@@ -32,6 +32,7 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
+    this.view.btnFav.onclick = this._addToFavorites.bind(this);
 
     const isInCart = await cartService.isInCart(this.product);
 
@@ -55,6 +56,14 @@ class ProductDetail extends Component {
 
     cartService.addProduct(this.product);
     this._setInCart();
+  }
+
+  public _addToFavorites() {
+    if (!this.product) return;
+
+    const favoritesArray: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
+    favoritesArray.push(this.product);
+    localStorage.setItem('favorites', JSON.stringify(favoritesArray));
   }
 
   private _setInCart() {
