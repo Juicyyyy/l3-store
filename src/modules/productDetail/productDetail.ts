@@ -4,6 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import { favoritesComp } from "../favorites/favorites"
 
 export class ProductDetail extends Component {
   more: ProductList;
@@ -64,6 +65,8 @@ export class ProductDetail extends Component {
     const favoritesArray: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
     favoritesArray.push(this.product);
     localStorage.setItem('favorites', JSON.stringify(favoritesArray));
+    favoritesComp.init();
+    location.reload();
   }
 
   private _setInCart() {

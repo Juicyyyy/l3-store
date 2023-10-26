@@ -6,9 +6,20 @@ import { formatPrice } from '../../utils/helpers';
 export class Favorites extends Component {
     products!: ProductData[];
 
+    async init() {
+        this.products = await JSON.parse(localStorage.getItem('favorites') || '[]');
+
+        if (this.products.length < 1) {
+            const favoritesLink = document.querySelector('.favoritesLink');
+            favoritesLink?.classList.add('checkout__empty');
+            return;
+        }
+    }
+
     async render() {
         const favoritesContainer = document.querySelector('.favorites__wrapper') as HTMLElement;
         this.products = await JSON.parse(localStorage.getItem('favorites') || '[]');
+
         this.products.forEach((product) => {
             const productCard = document.createElement('div');
             productCard.classList.add('product');
