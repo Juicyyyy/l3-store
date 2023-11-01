@@ -8,4 +8,86 @@
   &__popular {
     margin-top: 30px;
   }
+
+  &__wrapper {
+    width: 900px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+  }
+
+  &__inputTips {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  &__input {
+    width: 778px;
+    border: 3px solid rgba(203, 17, 171, 1);
+    border-radius: 50px;
+    font-size: 30px;
+    line-height: 32px;
+    padding: 12px 58px 16px 58px;
+
+    &::placeholder {
+      color: rgba(230, 225, 239, 1);
+    }
+
+    &:focus {
+      border: 3px solid rgba(218, 21, 184, 1);
+    }
+  }
+
+  &__search {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: 31px;
+    padding: 0;
+    position: absolute;
+    left: 20px;
+    top: 16px;
+    transition: .3s ease;
+    width: 31px;
+  }
+
+  &__menu {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: 25px;
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transition: .3s ease;
+    width: 28px;
+  }
+
+  &__tips {
+    padding-left: 20px;
+    font-size: 22px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+
+  &__text {
+    display: inline;
+    cursor: default;
+  }
+
+  &__wrapperSpan {
+    display: inline-block;
+    background-color: #F6F6FA;
+    padding: 4px 6px 8px 6px;
+    border-radius: 8px;
+  }
+
+  &__span {
+    cursor: pointer;
+    color: transparent;    
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-image: linear-gradient(to right, rgba(218, 21, 184, 1), rgba(141, 6, 204, 1));
+  }
 }

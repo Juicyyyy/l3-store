@@ -12,7 +12,6 @@ export class ProductDetail extends Component {
   
   constructor(props: any) {
     super(props);
-
     this.more = new ProductList();
     this.more.attach(this.view.more);
   }

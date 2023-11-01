@@ -7,9 +7,11 @@ import { Product } from '../product/product';
 export class ProductList {
   view: View;
   products: ProductData[];
+  productName: Array<string>;
 
   constructor() {
     this.products = [];
+    this.productName = [];
     this.view = new ViewTemplate(html).cloneView();
   }
 
@@ -30,6 +32,7 @@ export class ProductList {
       const productComp = new Product(product);
       productComp.render();
       productComp.attach(this.view.root);
+      this.productName.push(product.name);
     });
   }
 }
