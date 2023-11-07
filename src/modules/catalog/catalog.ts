@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import html from './catalog.tpl.html';
-
+import { sendEvent } from '../../utils/helpers';
 import { ProductList } from '../productList/productList';
 
 class Catalog extends Component {
@@ -17,6 +17,7 @@ class Catalog extends Component {
     const productsResp = await fetch('/api/getProducts');
     const products = await productsResp.json();
     this.productList.update(products);
+    sendEvent('route', { url: window.location.href });
   }
 }
 

@@ -5,6 +5,7 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 import { favoritesComp } from "../favorites/favorites"
+import { sendEvent } from '../../utils/helpers';
 
 export class ProductDetail extends Component {
   more: ProductList;
@@ -25,7 +26,7 @@ export class ProductDetail extends Component {
     this.product = await productResp.json();
 
     if (!this.product) return;
-
+    
     const { id, src, name, description, salePriceU } = this.product;
 
     this.view.photo.setAttribute('src', src);
@@ -39,10 +40,11 @@ export class ProductDetail extends Component {
 
     if (isInCart) this._setInCart();
 
-    fetch(`/api/getProductSecretKey?id=${id}`)
+    const productSecretKey = await fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
         this.view.secretKey.setAttribute('content', secretKey);
+        return secretKey;
       });
 
     fetch('/api/getPopularProducts')
@@ -50,6 +52,8 @@ export class ProductDetail extends Component {
       .then((products) => {
         this.more.update(products);
       });
+
+      sendEvent('viewCard', {properties: this.product, secretKey: productSecretKey});
   }
 
   private _addToCart() {
@@ -57,6 +61,7 @@ export class ProductDetail extends Component {
 
     cartService.addProduct(this.product);
     this._setInCart();
+    sendEvent('addToCard', this.product);
   }
 
   public _addToFavorites() {

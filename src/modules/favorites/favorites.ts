@@ -2,6 +2,7 @@ import { Component } from '../component';
 import html from './favorites.tpl.html';
 import { ProductData } from 'types';
 import { formatPrice } from '../../utils/helpers';
+import { sendEvent } from '../../utils/helpers';
 
 export class Favorites extends Component {
     products!: ProductData[];
@@ -38,6 +39,7 @@ export class Favorites extends Component {
             productCard.append(productImage, productName, productPrice);
             favoritesContainer.appendChild(productCard as HTMLElement);
         });
+        sendEvent('route', { url: window.location.href });
     }
 }
 

@@ -1,7 +1,7 @@
 import { addElement } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
-
+import { sendEvent } from '../../utils/helpers';
 import { ProductList } from '../productList/productList';
 
 class Homepage extends Component {
@@ -29,6 +29,7 @@ class Homepage extends Component {
           'Заказ оформлен. Деньги спишутся с вашей карты, менеджер может позвонить, чтобы уточнить детали доставки'
       });
     }
+    sendEvent('route', { url: window.location.href });
   }
 }
 

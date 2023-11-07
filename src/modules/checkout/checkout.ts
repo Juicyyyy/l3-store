@@ -4,6 +4,8 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import { sendEvent } from '../../utils/helpers';
+import { genUUID } from '../../utils/helpers';
 
 class Checkout extends Component {
   products!: ProductData[];
@@ -13,6 +15,7 @@ class Checkout extends Component {
 
     if (this.products.length < 1) {
       this.view.root.classList.add('is__empty');
+      sendEvent('route', { url: window.location.href });
       return;
     }
 
@@ -26,6 +29,8 @@ class Checkout extends Component {
     this.view.price.innerText = formatPrice(totalPrice);
 
     this.view.btnOrder.onclick = this._makeOrder.bind(this);
+    this.view.btnOrder.addEventListener('click', sendEvent('purchase', {orderId: genUUID(), totalPrice: formatPrice(totalPrice), properties: this.products.map(product => product.id)  }));
+    sendEvent('route', { url: window.location.href });
   }
 
   private async _makeOrder() {
@@ -33,7 +38,7 @@ class Checkout extends Component {
     fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
-    });
+    })
     window.location.href = '/?isSuccessOrder';
   }
 }

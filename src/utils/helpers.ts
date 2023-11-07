@@ -27,3 +27,42 @@ export const formatPrice = (price: number) => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽'
   );
 };
+
+interface EventPayload {
+  [key: string]: any;
+}
+
+interface Event {
+  type: string;
+  payload: EventPayload;
+  timestamp: number;
+}
+
+export const sendEvent = (type: string, payload: EventPayload) => {
+  const event: Event = {
+    type,
+    payload,
+    timestamp: Date.now(),
+  };
+  
+  // Отправка события на сервер
+  fetch('/api/sendEvent', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json'
+  },
+    body: JSON.stringify(event)
+  })
+  .then(response => {
+    if (response.ok) {
+    console.log('Событие успешно отправлено');
+    console.log(event);
+  } else {
+    console.error('Ошибка отправки события');
+  }
+  })
+  .catch(error => {
+    console.error('Ошибка отправки события', error);
+  });
+}
+  
