@@ -38,18 +38,15 @@ class Homepage extends Component {
     const inputSearch = this.view.search;
     const suggestions = this.popularProducts.productName;
     const suggestionContainer = this.view.tips;
-    // Очистка контейнера подсказок
+
     suggestionContainer.innerHTML = "";
 
-    // Получение значения из инпута
-     const inputValue = inputSearch.value.toLowerCase();
+    const inputValue = inputSearch.value.toLowerCase();
     
-    // Фильтрация подсказок, соответствующих вводу
     const matchingSuggestions = suggestions.filter(suggestion =>
       suggestion.toLowerCase().startsWith(inputValue)
     );
-    
-    // Добавление подсказок в контейнер
+  
     for (let i = 0; i < matchingSuggestions.length; i++) {
       if (matchingSuggestions.length >= 3) {
         suggestionContainer.innerHTML = `
@@ -87,47 +84,27 @@ class Homepage extends Component {
   }
 
   private showSuggestions_2(){
-    const popularProducts: string[] = ['чехол iphone 13 pro', 'коляски agex', 'яндекс станция 2', 'товар4', 'товар5', 'товар6']; // Моковые данные
-    const suggestionContainer = this.view.suggestions;
-  
-    // Очистка контейнера подсказок
-    if (suggestionContainer) {
-      suggestionContainer.innerHTML = "";
-    }
-  
-    // Выбираем случайные подсказки из списка товаров
-    const suggestions: string[] = this.getRandomSuggestions(popularProducts, 3);
-      
-    // Генерация HTML-кода подсказок
-    let suggestionHtml: string = '<span class="homepage__text">Например, ';
-    
-    suggestions.forEach((suggestion: string, index: number) => {
-      if (index === suggestions.length - 1) {
-        suggestionHtml += `или <div class="homepage__wrapperSpan"><span class="homepage__span">${suggestion}</span></div>`;
-      } else {
-        suggestionHtml += `<div class="homepage__wrapperSpan"><span class="homepage__span">${suggestion}</span></div>, `;
-      }
-    });
-    suggestionHtml += '</span>';
+    const suggestions = [{title: 'чехол iphone 13 pro', href: '#'}, {title: 'коляски agex', href: '#'}, {title: 'яндекс станция 2', href: '#'}];
 
-    // Добавление подсказок в контейнер
-    suggestionContainer.innerHTML = suggestionHtml;
-  }
-  
-  private getRandomSuggestions(products: string[], count: number): string[] {
-    // Копируем исходный массив, чтобы не мутировать его
-    const productsCopy: string[] = [...products];
-  
-    // Перемешиваем массив
-    for (let i = productsCopy.length - 1; i > 0; i--) {
-      const j: number = Math.floor(Math.random() * i);
-      const temp: string = productsCopy[i];
-      productsCopy[i] = productsCopy[j];
-      productsCopy[j] = temp;
-    }
-  
-    // Берем первые n элементов
-    return productsCopy.slice(0, count);
+    const suggestionContainer = this.view.suggestions;
+    let html = '<span class="homepage__text">Например, ';
+
+    suggestions.forEach((suggestion, index) => {
+      html += `
+        <div class="homepage__wrapperSpan">
+          <a class="homepage__span" href="${suggestion.href}">${suggestion.title}</a>
+        </div>`;
+      
+      if(index < suggestions.length - 2) {
+        html += ', ';
+      }
+      else if(index === suggestions.length - 2) {
+        html += ' или '
+      }
+    })
+
+    html += '</span>';
+    suggestionContainer.innerHTML = html;
   }
 }
 
