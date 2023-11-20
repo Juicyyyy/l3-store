@@ -66,7 +66,12 @@ export class ProductDetail extends Component {
     favoritesArray.push(this.product);
     localStorage.setItem('favorites', JSON.stringify(favoritesArray));
     favoritesComp.init();
-    location.reload();
+    this.setInFavorites();
+  }
+
+  private setInFavorites() {
+    this.view.btnFav.innerText = '✓ В избранном';
+    this.view.btnFav.disabled = true;
   }
 
   private _setInCart() {

@@ -8,11 +8,12 @@ export class Favorites extends Component {
 
     async init() {
         this.products = await JSON.parse(localStorage.getItem('favorites') || '[]');
+        const favoritesLink = document.querySelector('.favoritesLink');
 
         if (this.products.length < 1) {
-            const favoritesLink = document.querySelector('.favoritesLink');
             favoritesLink?.classList.add('checkout__empty');
-            return;
+        } else {
+            favoritesLink?.classList.remove('checkout__empty');
         }
     }
 
