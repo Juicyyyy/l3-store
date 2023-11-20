@@ -90,15 +90,17 @@ class Homepage extends Component {
     let html = '<span class="homepage__text">Например, ';
 
     suggestions.forEach((suggestion, index) => {
+      if (index > 2) return;
+
       html += `
         <div class="homepage__wrapperSpan">
           <a class="homepage__span" href="${suggestion.href}">${suggestion.title}</a>
         </div>`;
       
-      if(index < suggestions.length - 2) {
+      if(index === 0) {
         html += ', ';
       }
-      else if(index === suggestions.length - 2) {
+      else if(index === 1) {
         html += ' или '
       }
     })
