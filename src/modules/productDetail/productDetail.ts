@@ -33,7 +33,7 @@ export class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
-    this.view.btnFav.onclick = this._addToFavorites.bind(this);
+    this.view.btnFav.onclick = this.addToFavorites.bind(this);
 
     const isInCart = await cartService.isInCart(this.product);
 
@@ -59,7 +59,7 @@ export class ProductDetail extends Component {
     this._setInCart();
   }
 
-  async _addToFavorites() {
+  async addToFavorites() {
     if (!this.product) return;
 
     await cartService.addProductFav(this.product);
