@@ -59,12 +59,10 @@ export class ProductDetail extends Component {
     this._setInCart();
   }
 
-  public _addToFavorites() {
+  async _addToFavorites() {
     if (!this.product) return;
 
-    const favoritesArray: any[] = JSON.parse(localStorage.getItem('favorites') || '[]');
-    favoritesArray.push(this.product);
-    localStorage.setItem('favorites', JSON.stringify(favoritesArray));
+    await cartService.addProductFav(this.product);
     favoritesComp.init();
     this.setInFavorites();
   }

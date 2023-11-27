@@ -2,6 +2,7 @@ import localforage from 'localforage';
 import { ProductData } from 'types';
 
 const DB = '__wb-cart';
+const favorites = 'wb-favorites';
 
 class CartService {
   init() {
@@ -11,6 +12,11 @@ class CartService {
   async addProduct(product: ProductData) {
     const products = await this.get();
     await this.set([...products, product]);
+  }
+
+  async addProductFav(product: ProductData) {
+    const products = await this.getFav();
+    await this.setFav([...products, product]);
   }
 
   async removeProduct(product: ProductData) {
@@ -27,9 +33,17 @@ class CartService {
     return (await localforage.getItem(DB)) || [];
   }
 
+  async getFav(): Promise<ProductData[]> {
+    return (await localforage.getItem(favorites)) || [];
+  }
+
   async set(data: ProductData[]) {
     await localforage.setItem(DB, data);
     this._updCounters();
+  }
+
+  async setFav(data: ProductData[]) {
+    await localforage.setItem(favorites, data);
   }
 
   async isInCart(product: ProductData) {
