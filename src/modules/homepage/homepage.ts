@@ -84,7 +84,7 @@ class Homepage extends Component {
   }
 
   private showSuggestions_2(){
-    const suggestions = [{title: 'чехол iphone 13 pro', href: '#'}, {title: 'коляски agex', href: '#'}, {title: 'яндекс станция 2', href: '#'}];
+    const suggestions = [{title: 'чехол iphone 13 pro', href: '#'}, {title: 'коляски agex', href: '#'}, {title: 'яндекс станция 2git', href: '#'}];
 
     const suggestionContainer = this.view.suggestions;
     let html = '<span class="homepage__text">Например, ';
@@ -97,10 +97,10 @@ class Homepage extends Component {
           <a class="homepage__span" href="${suggestion.href}">${suggestion.title}</a>
         </div>`;
       
-      if(index === 0) {
+      if((index === 0) && (suggestions.length !== 1)) {
         html += ', ';
       }
-      else if(index === 1) {
+      else if((index === 1) && (suggestions.length !== 2)) {
         html += ' или '
       }
     })
