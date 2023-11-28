@@ -29,17 +29,23 @@ class Checkout extends Component {
     this.view.price.innerText = formatPrice(totalPrice);
 
     this.view.btnOrder.onclick = this._makeOrder.bind(this);
-    this.view.btnOrder.addEventListener('click', sendEvent('purchase', {orderId: genUUID(), totalPrice: formatPrice(totalPrice), properties: this.products.map(product => product.id)  }));
     sendEvent('route', { url: window.location.href });
   }
 
   private async _makeOrder() {
     await cartService.clear();
-    fetch('/api/makeOrder', {
-      method: 'POST',
-      body: JSON.stringify(this.products)
-    })
-    window.location.href = '/?isSuccessOrder';
+    sendEvent('purchase', {
+      orderId: genUUID(), 
+      totalPrice: this.view.price.innerText, 
+      properties: this.products.map(product => product.id)  
+    });
+
+    // fetch('/api/makeOrder', {
+    //   method: 'POST',
+    //   body: JSON.stringify(this.products)
+    // })
+    //window.location.href = '/?isSuccessOrder';
+
   }
 }
 
