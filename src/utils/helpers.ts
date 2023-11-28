@@ -45,21 +45,15 @@ export const sendEvent = (type: string, payload: EventPayload) => {
     timestamp: Date.now(),
   };
   
-  // Отправка события на сервер
   fetch('/api/sendEvent', {
     method: 'POST',
-    headers: {
-    'Content-Type': 'application/json'
-  },
     body: JSON.stringify(event)
   })
   .then(response => {
     if (response.ok) {
-    console.log('Событие успешно отправлено');
-    console.log(event);
-  } else {
-    console.error('Ошибка отправки события');
-  }
+      console.log('Событие успешно отправлено');
+      console.log(event);
+    } 
   })
   .catch(error => {
     console.error('Ошибка отправки события', error);
